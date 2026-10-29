@@ -1,0 +1,320 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-heading: 'Outfit', sans-serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+
+  code, pre {
+    font-family: var(--font-mono);
+  }
+}
+
+/* ==========================================================================
+   AMBIENT GLOW ANIMATION — Background orbs
+   ========================================================================== */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.35; transform: scale(1) translate(0, 0); }
+  33% { opacity: 0.6; transform: scale(1.1) translate(15px, -20px); }
+  66% { opacity: 0.5; transform: scale(0.95) translate(-10px, 15px); }
+}
+.animate-glow {
+  animation: pulseGlow 12s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   SCROLL-REVEAL — Elements slide + fade in when entering viewport
+   ========================================================================== */
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(40px) scale(0.97); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@keyframes revealLeft {
+  from { opacity: 0; transform: translateX(-50px); filter: blur(3px); }
+  to   { opacity: 1; transform: translateX(0); filter: blur(0); }
+}
+@keyframes revealRight {
+  from { opacity: 0; transform: translateX(50px); filter: blur(3px); }
+  to   { opacity: 1; transform: translateX(0); filter: blur(0); }
+}
+@keyframes revealScale {
+  from { opacity: 0; transform: scale(0.8); filter: blur(6px); }
+  to   { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+.reveal-up {
+  animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.reveal-left {
+  animation: revealLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.reveal-right {
+  animation: revealRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.reveal-scale {
+  animation: revealScale 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Stagger delays for children */
+.stagger-1 { animation-delay: 0.08s; }
+.stagger-2 { animation-delay: 0.16s; }
+.stagger-3 { animation-delay: 0.24s; }
+.stagger-4 { animation-delay: 0.32s; }
+.stagger-5 { animation-delay: 0.40s; }
+.stagger-6 { animation-delay: 0.48s; }
+.stagger-7 { animation-delay: 0.56s; }
+.stagger-8 { animation-delay: 0.64s; }
+
+/* ==========================================================================
+   HERO ANIMATIONS — Title typing caret, gradient shimmer, float
+   ========================================================================== */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient-text {
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+}
+
+@keyframes typeWriter {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+@keyframes blinkCaret {
+  0%, 100% { border-color: transparent; }
+  50% { border-color: #6366f1; }
+}
+.animate-typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #6366f1;
+  animation:
+    typeWriter 2.5s steps(35, end) forwards,
+    blinkCaret 0.8s step-end infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%      { transform: translateY(-12px) rotate(1deg); }
+}
+.animate-hero-float {
+  animation: heroFloat 6s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   PARTICLE GRID — Floating dots in the background
+   ========================================================================== */
+@keyframes particleDrift {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+  25%      { transform: translateY(-30px) translateX(15px); opacity: 0.6; }
+  50%      { transform: translateY(-15px) translateX(-10px); opacity: 0.4; }
+  75%      { transform: translateY(-40px) translateX(8px); opacity: 0.55; }
+}
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: particleDrift 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   COUNTER ANIMATION — For animated stats
+   ========================================================================== */
+@keyframes countPulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+.animate-counter-pop {
+  animation: countPulse 0.4s ease-out;
+}
+
+/* ==========================================================================
+   PROCESS FLOW — Animated pipeline with connectors
+   ========================================================================== */
+@keyframes flowLineGrow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.flow-connector {
+  transform-origin: left;
+  animation: flowLineGrow 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes nodeEnter {
+  from { opacity: 0; transform: scale(0.5) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.flow-node-enter {
+  animation: nodeEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes iconSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: iconSpin 20s linear infinite;
+}
+
+@keyframes ripple {
+  0%   { transform: scale(1); opacity: 0.4; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+.animate-ripple {
+  animation: ripple 1.5s ease-out infinite;
+}
+
+@keyframes progressFill {
+  from { width: 0%; }
+}
+.animate-progress-fill {
+  animation: progressFill 1.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ==========================================================================
+   MODAL ANIMATIONS
+   ========================================================================== */
+@keyframes modalBackdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes modalCardIn {
+  from { opacity: 0; transform: scale(0.92) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-modal-backdrop {
+  animation: modalBackdropIn 0.25s ease-out;
+}
+.animate-modal-card {
+  animation: modalCardIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ==========================================================================
+   TOAST ANIMATION
+   ========================================================================== */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-slideUp {
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   CARD HOVER EFFECTS — Magnetic tilt hint + glow border
+   ========================================================================== */
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(99, 102, 241, 0.15); box-shadow: 0 0 0 rgba(99, 102, 241, 0); }
+  50%      { border-color: rgba(99, 102, 241, 0.4); box-shadow: 0 0 25px rgba(99, 102, 241, 0.12); }
+}
+.hover-glow-border:hover {
+  animation: borderGlow 2s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   GLASSMORPHISM PANELS
+   ========================================================================== */
+.glass-panel-dark {
+  background: rgba(17, 23, 38, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+/* ==========================================================================
+   MARQUEE / INFINITE SCROLL — For tech stack or partner logos
+   ========================================================================== */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* ==========================================================================
+   ORBITING RING — Decorative around process flow center
+   ========================================================================== */
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.animate-orbit {
+  animation: orbit 25s linear infinite;
+}
+
+/* ==========================================================================
+   MAGNETIC CARD — Subtle scale on hover with spring feel
+   ========================================================================== */
+@keyframes springBounce {
+  0%   { transform: translateY(0); }
+  30%  { transform: translateY(-8px); }
+  50%  { transform: translateY(-5px); }
+  70%  { transform: translateY(-7px); }
+  100% { transform: translateY(-6px); }
+}
+
+/* ==========================================================================
+   TRAINER CONSOLE LIVE CONTINUOUS SIMULATION ANIMATIONS
+   ========================================================================== */
+@keyframes laserScan {
+  0%   { top: 0%; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { top: 95%; opacity: 0; }
+}
+.animate-laser-scan {
+  animation: laserScan 2.4s ease-in-out infinite;
+}
+
+@keyframes cursorRipple {
+  0% { transform: scale(0.6); opacity: 1; border-width: 3px; }
+  100% { transform: scale(2.8); opacity: 0; border-width: 1px; }
+}
+.animate-cursor-ripple {
+  animation: cursorRipple 0.8s cubic-bezier(0, 0.2, 0.8, 1) forwards;
+}
+
+@keyframes certificateStamp {
+  0%   { transform: scale(0.6) rotate(-10deg); opacity: 0; }
+  60%  { transform: scale(1.08) rotate(3deg); opacity: 1; }
+  80%  { transform: scale(0.96) rotate(-1deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.animate-cert-stamp {
+  animation: certificateStamp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes pulseRadarRing {
+  0%   { transform: scale(0.9); opacity: 0.8; }
+  50%  { transform: scale(1.4); opacity: 0.2; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+.animate-radar-ring {
+  animation: pulseRadarRing 1.8s ease-in-out infinite;
+}
